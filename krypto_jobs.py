@@ -28,6 +28,7 @@
 import streamlit as st
 from dataclasses import dataclass
 from typing import Any, List
+from crypto_wallet import generate_account, get_balance, send_transaction
 from web3 import Web3
 
 w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
@@ -156,12 +157,13 @@ st.sidebar.markdown("## Client Account Address and Ethernet Balance in Ether")
 
 # @TODO:
 #  Call the `generate_account` function and save it as the variable `account`
+generate_account()
 account = generate_account()
 
 ##########################################
 
 # Write the client's Ethereum account address to the sidebar
-st.sidebar.write(account)
+st.sidebar.write(account.address)
 
 ##########################################
 # Step 1 - Part 5:
@@ -171,13 +173,11 @@ st.sidebar.write(account)
 
 # @TODO
 # Call `get_balance` function and pass it your account address
-
-account_adress = '0x65C3BF2F007ACa9d20AC5fAe611A60E9aAa48dd9'
-
 # Write the returned ether balance to the sidebar
-def display_balance(account):
-    eth_bal = get_balance(account_address)
-    st.sidebar.write(f"Your Account Balance is: {eth_bal} of Ethereum / ETH")
+
+eth = get_balance(w3, account.address)
+
+st.sidebar.write(f"Your Account Balance is: {eth} of Ethereum / ETH")
 
 ##########################################
 
@@ -269,8 +269,8 @@ st.sidebar.markdown("## Total Wage in Ether")
 # rate from the candidate database (`candidate_database[person][3]`) by the
 # value of the `hours` variable
 
-candidate_hourly_rate = candidate_database[person][3]
-wage = candidate_hourly_rate * hours
+cand_hourly_rate = candidate_database[person][3]
+wage = cand_hourly_rate * hours
 
 # @TODO
 # Write the `wage` calculation to the Streamlit sidebar
@@ -303,6 +303,7 @@ if st.sidebar.button("Send Transaction"):
     # Save the returned transaction hash as a variable named `transaction_hash`
     transaction_hash = send_transaction(account, candidate_address, wage)
    
+
 
     # Markdown for the transaction hash
     st.sidebar.markdown("#### Validated Transaction Hash")
