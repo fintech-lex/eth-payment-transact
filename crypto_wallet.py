@@ -15,7 +15,7 @@ load_dotenv()
 from bip44 import Wallet
 from web3 import Account
 from web3 import middleware
-from web3.gas_strategies.time_based import fast_gas_price_strategy
+from web3.gas_strategies.time_based import medium_gas_price_strategy
 
 ################################################################################
 # Wallet functionality
@@ -53,7 +53,7 @@ def get_balance(w3, address):
 def send_transaction(w3, account, to, wage):
     """Send an authorized transaction to the Ganache blockchain."""
     # Set gas price strategy
-    w3.eth.setGasPriceStrategy(fast_gas_price_strategy)
+    w3.eth.setGasPriceStrategy(medium_gas_price_strategy)
 
     # Convert eth amount to Wei
     value = w3.toWei(wage, "ether")

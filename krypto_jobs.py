@@ -296,7 +296,7 @@ st.sidebar.write(f"This candidate's wage is: {wage} worth of Ethereum")
 
 if st.sidebar.button("Send Transaction"):
 
-    transaction_hash = send_transaction(w3, account.address, candidate_address, wage)
+    transaction_hash = send_transaction(w3, account, candidate_address, wage)
 
     # @TODO
         # Call the `send_transaction` function and pass it 3 parameters:
